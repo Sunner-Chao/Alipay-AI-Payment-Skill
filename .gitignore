@@ -1,5 +1,41 @@
+# OS and editor metadata
 .DS_Store
-*.env
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Local Agent and tool state
+.codex/
+.claude/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.local.env
 *.pem
 *.key
-__pycache__/
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.crt
+*.cer
+*.csr
+
+# Test and generated output
+coverage/
+htmlcov/
+dist/
+build/
+tmp/
+temp/
+*.log
+*.sqlite
+*.sqlite3
