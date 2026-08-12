@@ -1,0 +1,4 @@
+interface:
+  display_name: "支付宝 AI 付配置"
+  short_description: "安全配置支付宝 RSA2 直连支付、回调与查单流程"
+  default_prompt: "Use $configure-alipay-ai-payment to configure and verify Alipay RSA2 direct payment safely."
