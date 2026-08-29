@@ -1,4 +1,14 @@
 # Alipay AI Payment Agent Skill
++
+
+## 项目事实速览
+
+面向 Codex Agent 的支付宝开放平台 RSA2 配置与验收工作流 Skill。
+
+**运行与开发**：复制 Skill 目录到 `${CODEX_HOME:-$HOME/.codex}/skills/`，再运行校验脚本。
+
+**边界与安全**：模型、第三方 API、支付渠道、桌面自动化、OCR 和外部数据源均受其自身授权、限额和兼容性约束；不要把演示数据或测试通过当作生产 SLA。禁止提交密钥、令牌、个人数据、模型文件和生产日志。许可证以仓库 LICENSE/NOTICE 及第三方组件声明为准。
+
 
 面向 Codex Agent 的支付宝开放平台 RSA2 直连支付配置 Skill，适用于 SynthApi / new-api 及具有相同订单模型的服务端项目。
 
