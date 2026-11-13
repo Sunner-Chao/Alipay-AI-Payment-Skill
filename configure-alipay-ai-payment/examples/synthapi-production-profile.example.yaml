@@ -1,0 +1,29 @@
+# Documentation-only snapshot. Never add private key material to this file.
+# Refresh active_profile and checked_at from the authenticated admin console.
+schema_version: 1
+site:
+  id: synthapi-production
+  base_url: https://synthapi.asia
+  checked_at: 2026-11-13
+  active_profile: secondary
+  profile_api:
+    list: /api/option/alipay-profiles
+    save: /api/option/alipay-profiles/save
+    activate: /api/option/alipay-profiles/activate
+  callbacks:
+    notify: https://synthapi.asia/api/alipay/notify
+    return: https://synthapi.asia/api/alipay/return
+  minimum_topup_cny: "0.10"
+profiles:
+  legacy:
+    label: Primary Alipay profile
+    enabled: true
+    environment: production
+    configuration_ready_at_snapshot: true
+    credentials_ref: "<configure in the site's secret manager; never commit values>"
+  secondary:
+    label: Secondary Alipay profile
+    enabled: true
+    environment: production
+    configuration_ready_at_snapshot: true
+    credentials_ref: "<configure in the site's secret manager; never commit values>"

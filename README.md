@@ -1,18 +1,8 @@
 # Alipay AI Payment Agent Skill
-+
-
-## 项目事实速览
-
-面向 Codex Agent 的支付宝开放平台 RSA2 配置与验收工作流 Skill。
-
-**运行与开发**：复制 Skill 目录到 `${CODEX_HOME:-$HOME/.codex}/skills/`，再运行校验脚本。
-
-**边界与安全**：模型、第三方 API、支付渠道、桌面自动化、OCR 和外部数据源均受其自身授权、限额和兼容性约束；不要把演示数据或测试通过当作生产 SLA。禁止提交密钥、令牌、个人数据、模型文件和生产日志。许可证以仓库 LICENSE/NOTICE 及第三方组件声明为准。
-
 
 面向 Codex Agent 的支付宝开放平台 RSA2 直连支付配置 Skill，适用于 SynthApi / new-api 及具有相同订单模型的服务端项目。
 
-它把支付宝应用准备、密钥角色、回调安全、主动查单、幂等入账、沙箱验收、生产切换和故障排查整理为可重复执行的 Agent 工作流。仓库只包含教程、占位配置和不会回显凭据的结构校验脚本。
+它把支付宝应用准备、密钥角色、回调安全、主动查单、幂等入账、沙箱验收、生产切换和故障排查整理为可重复执行的 Agent 工作流。仓库只包含教程、脱敏模板和不会回显凭据的结构校验脚本。
 
 ## Capabilities
 
@@ -29,9 +19,12 @@
 configure-alipay-ai-payment/
 ├── SKILL.md
 ├── agents/openai.yaml
+├── examples/
+│   └── synthapi-production-profile.example.yaml
 ├── references/
 │   ├── alipay-open-platform.md
 │   ├── callback-security.md
+│   ├── deployment-profiles.md
 │   ├── synthapi-configuration.md
 │   └── troubleshooting.md
 └── scripts/
@@ -56,10 +49,10 @@ Use $configure-alipay-ai-payment to configure Alipay RSA2 direct payment for my 
 
 ```dotenv
 ALIPAY_ENABLED=false
-ALIPAY_APP_ID=2026000000000001
-ALIPAY_SELLER_ID=2088000000000001
-ALIPAY_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----REPLACE-----END PRIVATE KEY-----
-ALIPAY_PLATFORM_PUBLIC_KEY=-----BEGIN PUBLIC KEY-----REPLACE-----END PUBLIC KEY-----
+ALIPAY_APP_ID=<read from the site's secret store>
+ALIPAY_SELLER_ID=<read from the site's secret store>
+ALIPAY_PRIVATE_KEY=<read from the site's secret store>
+ALIPAY_PLATFORM_PUBLIC_KEY=<read from the site's secret store>
 ALIPAY_NOTIFY_URL=https://pay.example.com/api/alipay/notify
 ALIPAY_RETURN_URL=https://pay.example.com/api/alipay/return
 ALIPAY_MIN_TOPUP=0.01
@@ -70,6 +63,8 @@ ALIPAY_MIN_TOPUP=0.01
 ```bash
 configure-alipay-ai-payment/scripts/validate-alipay-config.sh ./alipay.local.env
 ```
+
+将该文件保存在仓库目录之外并设置仅当前运维账号可读的权限；不要把示例占位内容替换后提交。
 
 脚本只输出字段名和检查结果，不输出字段值。结构校验无法替代支付宝开放平台的产品授权检查，也不能证明私钥与平台中上传的应用公钥匹配。
 
@@ -100,6 +95,8 @@ python3 "${CODEX_HOME:-$HOME/.codex}/skills/.system/skill-creator/scripts/quick_
 - 真实商户的完整 AppID/SellerID 组合。
 - 完整生产回调正文、签名或含用户隐私的支付日志。
 - 通过个人收款监听、短信转发或未授权插件绕过支付宝产品授权的实现。
+
+站点可以提交公开回调 URL、配置档案 ID 和带时间戳的就绪状态快照，但不得提交密钥值。`configure-alipay-ai-payment/examples/synthapi-production-profile.example.yaml` 是 2026-11-13 检查时的脱敏快照，可能过期；操作前应从目标站点受保护的管理员接口重新读取生效配置。
 
 同步浏览器返回只能用于展示状态，不能作为入账依据。入账必须来自已验签通知或经过支付宝平台验证的主动查单结果。
 
